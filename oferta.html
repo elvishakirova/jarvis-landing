@@ -1,0 +1,473 @@
+<title>Джарвис — публичная оферта</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS (единые с главной страницей) ============ */
+  :root{
+    --ink:      #0A0600;
+    --amber:    #FFA74A;
+    --cream:    #FFFBF5;
+
+    --ink-2:    #1D1914;
+    --ink-3:    #3D2A14;
+
+    --on-dark:        var(--cream);
+    --on-dark-soft:   rgba(255,251,245,.68);
+    --on-dark-faint:  rgba(255,251,245,.42);
+
+    --border-dark:  #514D47;
+
+    --amber-ink: #0A0600;
+
+    --font-display: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "Cascadia Code", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+    --container: 1200px;
+    --pad-x: 20px;
+
+    --ease: cubic-bezier(.22,.8,.28,1);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  }
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--on-dark);
+    font-family:var(--font-display);
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; }
+  button{ font-family:inherit; }
+
+  .container{ max-width:var(--container); margin-inline:auto; padding-inline:var(--pad-x); }
+
+  /* ============ TYPE SCALE ============ */
+  h1,h2,h3,h4{ margin:0; font-family:var(--font-display); font-weight:600; text-wrap:balance; }
+  h1{ font-size:44px; line-height:1.15; letter-spacing:-.01em; max-width:800px; }
+  @media (max-width:480px){ h1{ font-size:32px; } }
+  h2{ font-size:22px; line-height:1.25; letter-spacing:-.005em; }
+  p{ margin:0; }
+  .lead{ font-size:20px; line-height:1.5; font-weight:400; }
+  @media (max-width:640px){ .lead{ font-size:18px; } }
+
+  .eyebrow{
+    font-family:var(--font-mono); font-weight:500; font-size:14px;
+    text-transform:uppercase; letter-spacing:.08em; color:var(--amber);
+  }
+  @media (max-width:480px){ .eyebrow{ font-size:12px; } }
+
+  .measure{ max-width:640px; }
+
+  /* ============ SECTIONS ============ */
+  .surface-dark{ background:var(--ink); color:var(--on-dark); }
+  .surface-dark .muted{ color:var(--on-dark-soft); }
+
+  section{ position:relative; padding-block:clamp(56px,9vw,112px); }
+
+  .seam{ position:relative; }
+  .seam::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--amber) 50%, transparent);
+    opacity:.5; transform:scaleX(0); transform-origin:center;
+    transition:transform 1.1s var(--ease);
+  }
+  .seam.in-view::before{ transform:scaleX(1); }
+
+  /* ============ BUTTONS ============ */
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--font-display); font-weight:500; font-size:16px; line-height:1;
+    padding:14px 24px;
+    border:1.5px solid transparent;
+    clip-path:polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+    cursor:pointer; text-decoration:none;
+    transition:transform .18s var(--ease), background-color .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+    white-space:nowrap;
+  }
+  .btn:active{ transform:translateY(1px); }
+  .btn-primary{ background:var(--amber); color:var(--amber-ink); border-color:var(--amber); box-shadow:0 1px 0 rgba(0,0,0,.05); }
+  .btn-primary:hover{ background:#ffc57e; border-color:#ffc57e; transform:translateY(-2px); box-shadow:0 10px 24px -8px rgba(255,167,74,.55); }
+  .btn-outline-dark{ background:transparent; color:var(--on-dark); border-color:var(--border-dark); }
+  .btn-outline-dark:hover{ border-color:var(--amber); color:var(--amber); transform:translateY(-2px); }
+  .btn-sm{ padding:10px 18px; font-size:14px; clip-path:polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px); }
+  .btn-arrow{ transition:transform .18s var(--ease); }
+  .btn:hover .btn-arrow{ transform:translateX(3px); }
+
+  /* ============ HEADER ============ */
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,6,0,.86); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-dark);
+  }
+  .site-header .container{ display:grid; grid-template-columns:1fr auto 1fr; align-items:center; column-gap:16px; height:50px; }
+  .brand{ font-family:var(--font-mono); font-weight:600; font-size:16px; color:var(--on-dark); text-decoration:none; letter-spacing:.01em; justify-self:start; }
+  .brand b{ color:var(--amber); font-weight:600; }
+  nav.primary-nav{ display:flex; align-items:center; gap:32px; justify-self:center; }
+  .nav-links{ display:flex; gap:28px; list-style:none; margin:0; padding:0; }
+  .nav-links a{ text-decoration:none; color:var(--on-dark-soft); font-size:15px; font-weight:500; transition:color .15s var(--ease); }
+  .nav-links a:hover{ color:var(--amber); }
+  .header-cta{ display:flex; align-items:center; gap:14px; }
+  .site-header .header-cta{ justify-self:end; }
+  .site-header .header-cta .btn-sm{ padding:4px 8px; font-size:13px; height:34px; box-sizing:border-box; }
+  .price-flag{ font-family:var(--font-mono); font-size:13px; color:var(--on-dark-soft); white-space:nowrap; }
+  .price-flag b{ color:var(--amber); font-weight:600; }
+
+  .burger{
+    display:none; width:40px; height:40px;
+    background:transparent; border:1.5px solid var(--border-dark); color:var(--on-dark);
+    clip-path:polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+    align-items:center; justify-content:center; cursor:pointer;
+  }
+  .mobile-panel{
+    display:none; position:fixed; inset:50px 0 0 0; z-index:49;
+    background:var(--ink); overflow-y:auto; padding:28px var(--pad-x) 40px;
+  }
+  .mobile-panel.open{ display:block; }
+  .mobile-panel .nav-links{ flex-direction:column; gap:4px; }
+  .mobile-panel .nav-links a{ display:block; padding:14px 4px; font-size:19px; color:var(--on-dark); border-bottom:1px solid var(--border-dark); }
+  .mobile-panel .header-cta{ margin-top:24px; flex-direction:column; align-items:flex-start; gap:12px; }
+  @media (max-width:900px){
+    .primary-nav .nav-links{ display:none; }
+    .site-header .header-cta .price-flag{ display:none; }
+    .burger{ display:flex; }
+  }
+  @media (max-width:560px){ .mobile-panel .header-cta .btn{ padding:9px 14px; font-size:13px; } }
+
+  /* ============ PAGE HEAD ============ */
+  .back-link{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:13px; color:var(--on-dark-faint);
+    text-decoration:none; margin-bottom:22px; transition:color .15s var(--ease);
+  }
+  .back-link:hover{ color:var(--amber); }
+  .page-head h1{ margin-bottom:14px; }
+  .doc-meta{ font-family:var(--font-mono); font-size:14px; color:var(--amber); }
+
+  /* ============ LEGAL DOCUMENT BODY ============ */
+  .doc-intro{ margin-top:clamp(32px,5vw,48px); padding-top:clamp(28px,4vw,40px); border-top:1px solid var(--border-dark); display:flex; flex-direction:column; gap:14px; }
+  .doc-intro p{ color:var(--on-dark-soft); font-size:16px; line-height:1.7; max-width:78ch; }
+
+  .doc-section{ margin-top:clamp(36px,5.5vw,52px); padding-top:clamp(28px,4vw,36px); border-top:1px solid var(--border-dark); }
+  .doc-section h2{ margin-bottom:16px; }
+  .doc-section p{ color:var(--on-dark-soft); font-size:16px; line-height:1.7; max-width:78ch; margin-bottom:14px; }
+  .doc-section p:last-child{ margin-bottom:0; }
+  .doc-section p b{ color:var(--on-dark); font-weight:600; }
+  .doc-section ul{ list-style:none; margin:14px 0 14px; padding:0; color:var(--on-dark-soft); font-size:16px; line-height:1.7; display:flex; flex-direction:column; gap:10px; max-width:78ch; }
+  .doc-section ul li{ padding-left:22px; position:relative; }
+  .doc-section ul li::before{ content:"—"; position:absolute; left:0; color:var(--amber); }
+  .doc-section a{ color:var(--on-dark); text-decoration:underline; text-decoration-color:var(--border-dark); text-underline-offset:2px; }
+  .doc-section a:hover{ color:var(--amber); }
+
+  .doc-req{ font-family:var(--font-mono); font-size:13px; line-height:1.9; color:var(--on-dark-faint); }
+
+  /* ============ FOOTER ============ */
+  footer{ padding-block:56px 40px; }
+  .footer-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:40px; margin-bottom:40px; }
+  @media (max-width:760px){ .footer-grid{ grid-template-columns:1fr; } }
+  .legal{ font-size:13px; line-height:1.7; color:var(--on-dark-faint); }
+  .legal a{ color:var(--on-dark-soft); text-decoration:underline; text-decoration-color:var(--border-dark); }
+  .req-block{ font-family:var(--font-mono); font-size:12.5px; line-height:1.9; color:var(--on-dark-faint); }
+  .footer-bottom{ display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center; padding-top:24px; font-size:13px; color:var(--on-dark-faint); }
+
+  /* ============ SCROLL TO TOP ============ */
+  .scroll-top-btn{
+    position:fixed; right:20px; bottom:20px; z-index:40;
+    width:44px; height:44px;
+    clip-path:polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+    background:var(--ink-2); border:1px solid var(--border-dark); color:var(--on-dark);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    font-size:18px; line-height:1;
+    opacity:0; visibility:hidden; transform:translateY(8px);
+    transition:opacity .2s var(--ease), transform .2s var(--ease), visibility .2s, border-color .2s var(--ease), color .2s var(--ease);
+  }
+  .scroll-top-btn.visible{ opacity:1; visibility:visible; transform:translateY(0); }
+  .scroll-top-btn:hover{ border-color:var(--amber); color:var(--amber); }
+
+  /* ============ COOKIE CONSENT ============ */
+  .cookie-banner{
+    position:fixed; left:40px; bottom:40px; z-index:60;
+    width:420px; max-width:calc(100vw - 80px);
+    background:var(--ink-2); border:1px solid var(--border-dark);
+    padding:20px 22px;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.6);
+    opacity:0; visibility:hidden; transform:translateY(12px);
+    transition:opacity .3s var(--ease), transform .3s var(--ease), visibility .3s;
+  }
+  .cookie-banner.visible{ opacity:1; visibility:visible; transform:translateY(0); }
+  .cookie-banner p{ font-size:14px; line-height:1.55; color:var(--on-dark-soft); margin:0 0 16px; }
+  .cookie-banner a{ color:var(--on-dark); text-decoration:underline; text-decoration-color:var(--border-dark); text-underline-offset:2px; }
+  .cookie-banner a:hover{ color:var(--amber); }
+  @media (max-width:480px){ .cookie-banner{ left:20px; right:20px; bottom:20px; width:auto; max-width:420px; margin-inline:auto; } }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in-view{ opacity:1; transform:none; }
+</style>
+
+<!-- ============================================================ HEADER ============================================================ -->
+<header class="site-header">
+  <div class="container">
+    <a href="index.html#top" class="brand">~/<b>jarvis</b></a>
+    <nav class="primary-nav">
+      <ul class="nav-links">
+        <li><a href="index.html#program">Программа</a></li>
+        <li><a href="index.html#trust">Ведущие</a></li>
+        <li><a href="index.html#trust">Отзывы</a></li>
+        <li><a href="index.html#checklist">Подготовка</a></li>
+        <li><a href="index.html#pricing">Цена</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <span class="price-flag"><b>30 000 ₽</b> до 31.08</span>
+      <a class="btn btn-primary btn-sm" href="https://t.me/jarvis_2_brain_bot">Забронировать <span class="btn-arrow">→</span></a>
+      <button class="burger" id="burgerBtn" aria-label="Открыть меню" aria-expanded="false">
+        <svg id="burgerIcon" width="20" height="20" viewBox="0 0 24 24"><use href="#icon-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="mobile-panel" id="mobilePanel">
+  <ul class="nav-links">
+    <li><a href="index.html#program">Программа</a></li>
+    <li><a href="index.html#trust">Ведущие</a></li>
+    <li><a href="index.html#trust">Отзывы</a></li>
+    <li><a href="index.html#checklist">Как подготовиться</a></li>
+    <li><a href="index.html#pricing">Цена</a></li>
+  </ul>
+  <div class="header-cta">
+    <span class="price-flag"><b>30 000 ₽</b> до 31.08</span>
+    <a class="btn btn-primary" href="https://t.me/jarvis_2_brain_bot">Забронировать <span class="btn-arrow">→</span></a>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ============================================================ PAGE HEAD + DOCUMENT ============================================================ -->
+<section class="surface-dark">
+  <div class="container">
+    <a class="back-link reveal" href="index.html#top"><span style="display:inline-block; transform:rotate(180deg);">→</span> на главную</a>
+    <div class="page-head reveal">
+      <span class="eyebrow">документы</span>
+      <h1 style="margin-top:14px;">Публичная оферта на оказание консультационных услуг</h1>
+      <p class="doc-meta">Редакция от 27 августа 2026 г.</p>
+    </div>
+
+    <div class="doc-intro reveal">
+      <p>Настоящий документ является публичной офертой (далее — Оферта) Индивидуального предпринимателя Урванцева Константина Юрьевича (ОГРНИП 315222500010340, ИНН 222403579311; далее — Исполнитель) и содержит все существенные условия договора возмездного оказания консультационных услуг. В соответствии со ст. 435 и п. 2 ст. 437 Гражданского кодекса Российской Федерации в случае принятия изложенных ниже условий (акцепта) лицо, производящее акцепт, становится Заказчиком.</p>
+      <p>Оказываемые по настоящей Оферте услуги являются консультационными и не являются образовательной деятельностью в значении Федерального закона «Об образовании в Российской Федерации»; лицензированию такие услуги не подлежат. Итоговые документы об образовании (дипломы, свидетельства государственного образца) не выдаются.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>1. Термины</h2>
+      <p><b>Интенсив</b> — очное мероприятие (интенсив о практическом применении нейросетей и персональных ИИ-ассистентов), проводимое Исполнителем в даты и в городе, объявленных на Сайте, в рамках которого Заказчику оказываются консультационные услуги.</p>
+      <p><b>Услуги</b> — консультационные услуги по применению инструментов искусственного интеллекта и организации персональной работы с информацией, оказываемые в формате Интенсива и связанных материалов.</p>
+      <p><b>Сайт</b> — сайт Исполнителя https://ai.urvantcev.ru.</p>
+      <p><b>Акцепт</b> — полное и безоговорочное принятие Заказчиком условий Оферты путём совершения действий, указанных в разделе 3.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>2. Предмет договора</h2>
+      <p><b>2.1.</b> Исполнитель обязуется оказать Заказчику консультационные услуги в объёме и на условиях настоящей Оферты, а Заказчик обязуется принять и оплатить эти услуги.</p>
+      <p><b>2.2.</b> Содержание, программа, даты, место и формат оказания услуг размещаются на Сайте и являются неотъемлемой частью Оферты.</p>
+      <p><b>2.3.</b> Услуги имеют характер консультирования и сопровождения: Исполнитель направляет Заказчика, демонстрирует подходы и инструменты, отвечает на вопросы и помогает в ходе практических занятий. Заказчик самостоятельно выполняет практические задания и настраивает свои инструменты.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>3. Порядок заключения договора (акцепт)</h2>
+      <p><b>3.1.</b> Акцептом Оферты является оплата Заказчиком стоимости услуг либо оформление заявки с последующей оплатой. Совершение акцепта означает, что Заказчик ознакомился и согласен с настоящей Офертой и <a href="privacy.html">Политикой обработки персональных данных</a>.</p>
+      <p><b>3.2.</b> Договор считается заключённым с момента поступления оплаты на расчётный счёт Исполнителя.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>4. Права и обязанности сторон</h2>
+      <p><b>4.1.</b> Исполнитель обязуется: оказать услуги в согласованные даты и в заявленном объёме; заблаговременно сообщить Заказчику о месте проведения и необходимой подготовке; при отмене мероприятия по своей инициативе — вернуть оплату в полном объёме.</p>
+      <p><b>4.2.</b> Исполнитель вправе: изменить состав ведущих, отдельные темы и порядок занятий без снижения общей ценности программы; перенести дату или место проведения, уведомив Заказчика; отказать в участии при нарушении Заказчиком правил мероприятия.</p>
+      <p><b>4.3.</b> Заказчик обязуется: своевременно оплатить услуги; самостоятельно обеспечить необходимые для участия условия (ноутбук, доступ к сервисам и подписки, указанные на Сайте); соблюдать правила площадки и требования законодательства.</p>
+      <p><b>4.4.</b> Заказчик вправе: получать услуги в заявленном объёме; обращаться к Исполнителю по вопросам, связанным с оказанием услуг.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>5. Стоимость и порядок оплаты</h2>
+      <p><b>5.1.</b> Стоимость услуг указывается на Сайте и в выставляемом счёте и зависит от даты оплаты (действует «ранняя» и последующие цены). Применяется стоимость, действующая на момент оплаты.</p>
+      <p><b>5.2.</b> Оплата производится в безналичном порядке на расчётный счёт Исполнителя, в том числе через Систему быстрых платежей (СБП) по выставленному счёту или QR-коду.</p>
+      <p><b>5.3.</b> Обязательство Заказчика по оплате считается исполненным с момента поступления денежных средств на расчётный счёт Исполнителя.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>6. Порядок оказания услуг</h2>
+      <p><b>6.1.</b> Услуги оказываются очно в даты и в месте, объявленных на Сайте. Точное место, расписание и материалы для подготовки сообщаются Заказчику после оплаты.</p>
+      <p><b>6.2.</b> Факт оказания услуг подтверждается участием Заказчика в Интенсиве. Подписание отдельного акта не требуется; при необходимости акт оформляется по запросу одной из сторон.</p>
+      <p><b>6.3.</b> Интенсив проводится в очном групповом формате с последовательной программой: каждый следующий блок опирается на результаты предыдущих. Исполнитель вправе не допустить к участию Заказчика, опоздавшего более чем на 4 (четыре) часа относительно объявленного времени начала соответствующего дня Интенсива, поскольку очный формат не позволяет обеспечить индивидуальное сопровождение для наверстания пропущенной части программы без ущерба для остальных участников. В этом случае услуги считаются готовыми к оказанию, ресурсы — зарезервированными, и оплата не возвращается. Рекомендуем прибывать к объявленному времени сбора.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>7. Отмена, перенос и возврат</h2>
+      <p><b>7.1.</b> Заказчик вправе отказаться от услуг до начала их оказания, письменно уведомив Исполнителя (в том числе через Telegram). Возврат производится за вычетом фактически понесённых Исполнителем расходов:</p>
+      <ul>
+        <li>(а) при отказе за 14 (четырнадцать) и более календарных дней до даты начала — возврат 100% стоимости;</li>
+        <li>(б) при отказе за 7 (семь) и более, но менее чем за 14 календарных дней — возврат 80% стоимости;</li>
+        <li>(в) при отказе менее чем за 7 календарных дней до начала или при неявке — оплата не возвращается, поскольку места и ресурсы уже зарезервированы, а расходы на подготовку понесены.</li>
+      </ul>
+      <p><b>7.2.</b> Вместо возврата Заказчик вправе перенести участие на другое мероприятие Исполнителя (при наличии) или передать своё место другому лицу, уведомив Исполнителя заранее.</p>
+      <p><b>7.3.</b> При переносе или отмене мероприятия по инициативе Исполнителя Заказчику по его выбору предоставляется участие в новую дату либо возврат оплаты в полном объёме.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>8. Гарантии и ответственность</h2>
+      <p><b>8.1.</b> Услуги носят консультационный характер и не являются услугами по разработке программного обеспечения, написанию кода или созданию приложений «под ключ». Исполнитель прилагает разумные усилия и передаёт проверенные подходы и инструменты, однако итоговый результат зависит исключительно от вовлечённости, действий и самостоятельной работы Заказчика. Исполнитель не гарантирует и в силу характера услуг не может гарантировать достижения Заказчиком какого-либо конкретного результата, в том числе бизнес-показателей, и не выполняет работу за Заказчика.</p>
+      <p><b>8.2.</b> Полученные в рамках услуг рекомендации, материалы и демонстрируемые приёмы носят рекомендательный характер. Заказчик применяет их по собственному усмотрению и на свой риск; Исполнитель не несёт ответственности за способ применения Заказчиком полученных знаний и рекомендаций и за последствия такого применения.</p>
+      <p><b>8.3.</b> Несоответствие оказанных услуг субъективным ожиданиям Заказчика и (или) его субъективная оценка не являются основанием считать услуги оказанными некачественно или не в согласованном объёме.</p>
+      <p><b>8.4.</b> Исполнитель не отвечает за работоспособность, стоимость и условия сторонних сервисов и программного обеспечения (модели ИИ, мессенджеры, платёжные и иные сервисы), используемых Заказчиком.</p>
+      <p><b>8.5.</b> Ответственность Исполнителя по настоящей Оферте в любом случае ограничена стоимостью оплаченных услуг.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>9. Обстоятельства непреодолимой силы</h2>
+      <p><b>9.1.</b> Стороны освобождаются от ответственности за неисполнение обязательств, если оно вызвано обстоятельствами непреодолимой силы (форс-мажор), возникшими после акцепта Оферты и не зависящими от воли сторон.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>10. Персональные данные</h2>
+      <p><b>10.1.</b> Обработка персональных данных Заказчика осуществляется в соответствии с <a href="privacy.html">Политикой обработки персональных данных</a>, размещённой на Сайте. Совершая акцепт, Заказчик подтверждает согласие с её условиями.</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>11. Срок действия и прочие условия</h2>
+      <p><b>11.1.</b> Оферта действует с момента размещения на Сайте и до её отзыва или замены новой редакцией. Исполнитель вправе изменять условия Оферты; изменения вступают в силу с момента размещения на Сайте и не распространяются на уже заключённые договоры.</p>
+      <p><b>11.2.</b> Во всём, что не урегулировано настоящей Офертой, стороны руководствуются законодательством Российской Федерации. Споры разрешаются путём переговоров, а при недостижении согласия — в порядке, установленном законодательством РФ.</p>
+      <p><b>11.3.</b> По всем вопросам, связанным с исполнением договора, Заказчик может обратиться к Исполнителю через Telegram: <a href="https://t.me/jarvis_2_brain_bot">@jarvis_2_brain_bot</a> (или через кнопку «Связаться с организаторами» на Сайте).</p>
+    </div>
+
+    <div class="doc-section reveal">
+      <h2>12. Реквизиты Исполнителя</h2>
+      <p class="doc-req">
+        Индивидуальный предприниматель Урванцев Константин Юрьевич<br>
+        ИНН 222403579311 · ОГРНИП 315222500010340<br>
+        р/с 40802810838720041955<br>
+        ПАО Сбербанк · БИК 044525225<br>
+        к/с 30101810400000000225<br>
+        123308, г. Москва, наб. Шелепихинская, д. 40, к. 2<br>
+        Telegram <a href="https://t.me/jarvis_2_brain_bot">@jarvis_2_brain_bot</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================ FOOTER ============================================================ -->
+<footer class="surface-dark seam">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html#top" class="brand" style="font-size:18px;">~/<b>jarvis</b></a>
+        <p class="muted" style="margin-top:14px; max-width:44ch; font-size:14px;">Интенсив «Создаём Джарвиса» · Москва · 15–16 сентября 2026</p>
+        <p class="legal" style="margin-top:20px; max-width:52ch;">Интенсив — оказание консультационных услуг. Систему вы собираете сами: ведущие направляют, показывают на своих примерах и помогают, но не выполняют работу за вас. Итоговый результат зависит от вашего участия; конкретные бизнес-показатели не гарантируются.</p>
+        <p class="legal" style="margin-top:12px;">Оставляя заявку и оплачивая участие, вы принимаете условия <a href="oferta.html">публичной оферты</a> и <a href="privacy.html">Политики обработки персональных данных</a>.</p>
+      </div>
+      <div class="req-block">
+        ИП Урванцев Константин Юрьевич<br>
+        ИНН 222403579311 · ОГРНИП 315222500010340<br>
+        р/с 40802810838720041955<br>
+        ПАО Сбербанк · БИК 044525225<br>
+        к/с 30101810400000000225<br>
+        123308, г. Москва, наб. Шелепихинская, 40 к.2
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 «Создаём Джарвиса»</span>
+      <a class="btn btn-outline-dark btn-sm" href="https://t.me/jarvis_2_brain_bot">Отправить в бот <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</footer>
+
+<button id="scrollTopBtn" class="scroll-top-btn" aria-label="Наверх">
+  <span style="display:inline-block; transform:rotate(-90deg);">→</span>
+</button>
+
+<div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Уведомление о cookie">
+  <p>Мы используем cookie для корректной работы сайта и аналитики. Продолжая, вы соглашаетесь с обработкой данных согласно <a href="privacy.html">политике конфиденциальности</a>.</p>
+  <button id="cookieAccept" class="btn btn-outline-dark btn-sm">Принять</button>
+</div>
+
+<!-- ============================================================ ICON SPRITE — Pixelarticons (MIT © Gerrit Halfmann, github.com/halfmage/pixelarticons), 24×24 ============================================================ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute; width:0; height:0; overflow:hidden;">
+  <defs>
+    <g id="icon-menu" fill="currentColor"><path d="M20 18H4v-2h16zm0-5H4v-2h16zm0-5H4V6h16z"/></g>
+    <g id="icon-close" fill="currentColor"><path d="M7 19H5v-2h2zm12 0h-2v-2h2zM9 15v2H7v-2zm8 2h-2v-2h2zm-6-2H9v-2h2zm4 0h-2v-2h2zm-2-2h-2v-2h2zm-2-2H9V9h2zm4 0h-2V9h2zM9 9H7V7h2zm8 0h-2V7h2zM7 7H5V5h2zm12 0h-2V5h2z"/></g>
+  </defs>
+</svg>
+
+<script>
+(function(){
+  // ---------- Mobile menu ----------
+  var burger = document.getElementById('burgerBtn');
+  var panel = document.getElementById('mobilePanel');
+  var burgerIcon = document.getElementById('burgerIcon');
+  var ICON_MENU = '<use href="#icon-menu"/>';
+  var ICON_CLOSE = '<use href="#icon-close"/>';
+  if(burger && panel){
+    burger.addEventListener('click', function(){
+      var open = panel.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if(burgerIcon) burgerIcon.innerHTML = open ? ICON_CLOSE : ICON_MENU;
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ panel.classList.remove('open'); burger.setAttribute('aria-expanded','false'); });
+    });
+  }
+
+  // ---------- Scroll to top ----------
+  var scrollTopBtn = document.getElementById('scrollTopBtn');
+  if(scrollTopBtn){
+    window.addEventListener('scroll', function(){
+      scrollTopBtn.classList.toggle('visible', window.scrollY > 600);
+    }, { passive:true });
+    scrollTopBtn.addEventListener('click', function(){
+      window.scrollTo({ top:0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+  }
+
+  // ---------- Cookie consent ----------
+  (function(){
+    var CONSENT_KEY = 'jarvis-cookie-consent';
+    var banner = document.getElementById('cookieBanner');
+    var accept = document.getElementById('cookieAccept');
+    if(!banner || !accept) return;
+    var consented = false;
+    try{ consented = localStorage.getItem(CONSENT_KEY) === '1'; }catch(e){}
+    if(!consented){
+      setTimeout(function(){ banner.classList.add('visible'); }, 600);
+    }
+    accept.addEventListener('click', function(){
+      banner.classList.remove('visible');
+      try{ localStorage.setItem(CONSENT_KEY, '1'); }catch(e){}
+    });
+  })();
+
+  // ---------- Scroll reveal ----------
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('.reveal, .seam');
+  if(reduceMotion || !('IntersectionObserver' in window)){
+    targets.forEach(function(el){ el.classList.add('in-view'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+      });
+    }, { threshold:.14, rootMargin:'0px 0px -6% 0px' });
+    targets.forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
